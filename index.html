@@ -854,6 +854,9 @@
             <button onclick="switchSubTab4('cartera_anual')" id="btn-sub4-cartera_anual" class="sub4-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
               📈 4E. Crecimiento Anual Regional (2023–2025)
             </button>
+            <button onclick="switchSubTab4('tendencia_medios')" id="btn-sub4-tendencia_medios" class="sub4-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
+              📉 4F. Tendencia Anual Medios de Pago (2023–2026*)
+            </button>
           </div>
 
           <div class="flex flex-wrap gap-2">
@@ -935,6 +938,67 @@
         </div>
 
         <div id="sub4-std-wrap" class="space-y-3">
+        
+        <div id="sub4-tendencia-wrap" class="hidden space-y-3">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2 pb-2 border-b border-[var(--border)]">
+            <div>
+              <h3 class="text-sm md:text-base font-bold">4F. Tendencia Anual del Recaudo por Medio de Pago — Canal Masivos (2023 – 2026*)</h3>
+              <p class="text-[11px] text-[var(--muted-foreground)]">Fuente: Analisis_Tendencia_Recaudo.xlsx (Hoja Tendencias) | *2026 corresponde a información acumulada Enero–Octubre</p>
+            </div>
+            <div class="flex flex-wrap gap-2 items-center">
+              <select id="t4f-sort" onchange="renderTendenciaMedios()" class="px-2.5 py-1.5 text-xs font-bold rounded-md bg-blue-50/50 border-2 border-blue-600">
+                <option value="crec_val_desc" selected>⬇️ Crecimiento 23→26* ($): Mayor a Menor</option>
+                <option value="crec_val_asc">⬆️ Crecimiento 23→26* ($): Menor a Mayor</option>
+                <option value="crec_pct_desc">⬇️ Crecimiento % (23→26*): Mayor a Menor</option>
+                <option value="crec_pct_asc">⬆️ Crecimiento % (23→26*): Menor a Mayor</option>
+                <option value="y26_desc">⬇️ Recaudo 2026* ($): Mayor a Menor</option>
+                <option value="y26_asc">⬆️ Recaudo 2026* ($): Menor a Mayor</option>
+                <option value="y25_desc">⬇️ Recaudo 2025 ($): Mayor a Menor</option>
+                <option value="az">🔤 Medio de Pago: A → Z</option>
+                <option value="za">🔤 Medio de Pago: Z → A</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="kpis-tendencia-4f" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5"></div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+            <div id="chart-4f-line-wrap"></div>
+            <div id="chart-4f-bar-wrap"></div>
+          </div>
+
+          <div class="overflow-x-auto border border-slate-300 rounded-lg">
+            <table class="tbl-compact">
+              <thead>
+                <tr class="grp-hdr">
+                  <th class="bg-slate-200 text-slate-800 grp-sep">1. MEDIO DE PAGO</th>
+                  <th colspan="4" class="bg-blue-100 text-blue-900 grp-sep">2. RECAUDO ANUAL ($)</th>
+                  <th colspan="4" class="bg-emerald-100 text-emerald-900 grp-sep">3. CRECIMIENTO (2023 → 2026*)</th>
+                  <th colspan="3" class="bg-amber-100 text-amber-900">4. PARTICIPACIÓN (% SHARE)</th>
+                </tr>
+                <tr class="col-hdr">
+                  <th onclick="toggleSelectSort('t4f-sort','az','za',renderTendenciaMedios)" class="text-left grp-sep">Tipo Cobrador / Medio ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','y23_desc','y23_asc',renderTendenciaMedios)" class="text-right">2023 ($) ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','y24_desc','y24_asc',renderTendenciaMedios)" class="text-right">2024 ($) ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','y25_desc','y25_asc',renderTendenciaMedios)" class="text-right">2025 ($) ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','y26_desc','y26_asc',renderTendenciaMedios)" class="text-right grp-sep">2026* (Ene–Oct) ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','g23_24_desc','g23_24_asc',renderTendenciaMedios)" class="text-center">% 23→24 ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','g24_25_desc','g24_25_asc',renderTendenciaMedios)" class="text-center">% 24→25 ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','crec_val_desc','crec_val_asc',renderTendenciaMedios)" class="text-right">Crecimiento ($) ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','crec_pct_desc','crec_pct_asc',renderTendenciaMedios)" class="text-center grp-sep">Crecimiento % ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','sh23_desc','sh23_asc',renderTendenciaMedios)" class="text-center">Share 2023 ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','sh26_desc','sh26_asc',renderTendenciaMedios)" class="text-center">Share 2026* ⇅</th>
+                  <th onclick="toggleSelectSort('t4f-sort','sh_pp_desc','sh_pp_asc',renderTendenciaMedios)" class="text-center">Var. Share ⇅</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-tendencia-4f" class="font-mono tabular-nums"></tbody>
+            </table>
+          </div>
+          <div class="text-[11px] text-[var(--muted-foreground)] bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
+            <strong>Nota:</strong> * 2026 corresponde a información acumulada hasta octubre; los demás años se mantienen con sus valores originales. Destaca que <strong>MEDIO (+67,7%)</strong> y <strong>PUNTO RECAUDO (+50,2%)</strong> ya superaron en 10 meses de 2026 todo el recaudo del año 2025.
+          </div>
+        </div>
+
         <div id="chart-tab4-wrap"></div>
         <div class="overflow-x-auto border border-slate-300 rounded-lg">
           <table class="tbl-compact">
@@ -1743,7 +1807,7 @@
 
     function switchSubTab4(sub) {
       currentSubTab4 = sub;
-      ["emp", "mas4", "med", "reg", "cartera_anual"].forEach(k => {
+      ["emp", "mas4", "med", "reg", "cartera_anual", "tendencia_medios"].forEach(k => {
         const b = document.getElementById("btn-sub4-" + k);
         if (!b) return;
         b.className = (k === sub)
@@ -1751,23 +1815,38 @@
           : "sub4-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300";
       });
       const cWrap = document.getElementById("sub4-cartera-wrap");
+      const tWrap = document.getElementById("sub4-tendencia-wrap");
       const kpis4 = document.getElementById("kpis-tab4");
       const tbl4 = document.getElementById("tbody-tab4")?.closest(".overflow-x-auto");
       const ch4 = document.getElementById("chart-tab4-wrap");
       const bar4 = document.getElementById("t4-view")?.closest(".flex");
+      const note4 = document.getElementById("tab4-extra-note");
       if (sub === "cartera_anual") {
         if (cWrap) cWrap.classList.remove("hidden");
+        if (tWrap) tWrap.classList.add("hidden");
         if (kpis4) kpis4.classList.add("hidden");
         if (tbl4) tbl4.classList.add("hidden");
         if (ch4) ch4.classList.add("hidden");
         if (bar4) bar4.classList.add("hidden");
+        if (note4) note4.classList.add("hidden");
         renderCarteraAnual();
+      } else if (sub === "tendencia_medios") {
+        if (cWrap) cWrap.classList.add("hidden");
+        if (tWrap) tWrap.classList.remove("hidden");
+        if (kpis4) kpis4.classList.add("hidden");
+        if (tbl4) tbl4.classList.add("hidden");
+        if (ch4) ch4.classList.add("hidden");
+        if (bar4) bar4.classList.add("hidden");
+        if (note4) note4.classList.add("hidden");
+        renderTendenciaMedios();
       } else {
         if (cWrap) cWrap.classList.add("hidden");
+        if (tWrap) tWrap.classList.add("hidden");
         if (kpis4) kpis4.classList.remove("hidden");
         if (tbl4) tbl4.classList.remove("hidden");
         if (ch4) ch4.classList.remove("hidden");
         if (bar4) bar4.classList.remove("hidden");
+        if (note4) note4.classList.remove("hidden");
         renderTab4();
       }
     }
@@ -2499,6 +2578,164 @@
         chart4eItems
       );
 
+    }
+
+
+    const TENDENCIA_4F_DATA = {"years": ["2023", "2024", "2025", "2026*"], "series": [{"name": "COBRADOR", "y23": 20851756864.0, "y24": 23014806974.0, "y25": 25675619214.0, "y26": 24633223998.0, "crec_val": 3781467134.0, "crec_pct": 18.135004923871, "g23_24": 10.373466965435647, "g24_25": 11.561305914952664, "sh23": 50.504468058644825, "sh26": 44.34923000779462, "sh_pp": -6.155238050850208}, {"name": "OFICINA", "y23": 10994507124.0, "y24": 13083920440.0, "y25": 15249716080.0, "y26": 15166243985.0, "crec_val": 4171736861.0, "crec_pct": 37.9438278946901, "g23_24": 19.00415627944797, "g24_25": 16.55310921471791, "sh23": 26.629493979150638, "sh26": 27.30504309544324, "sh_pp": 0.6755491162926006}, {"name": "MEDIO", "y23": 8955364482.0, "y24": 11708130428.0, "y25": 14779444107.0, "y26": 15015167555.0, "crec_val": 6059803073.0, "crec_pct": 67.6667385808809, "g23_24": 30.738737117098612, "g24_25": 26.232315209394592, "sh23": 21.690542546827356, "sh26": 27.03304770647708, "sh_pp": 5.3425051596497255}, {"name": "PUNTO RECAUDO", "y23": 485326260.0, "y24": 579115690.0, "y25": 671956161.0, "y26": 729111205.0, "crec_val": 243784945.0, "crec_pct": 50.231146569320195, "g23_24": 19.325026838646643, "g24_25": 16.0314204230937, "sh23": 1.1754954153771757, "sh26": 1.3126791902850659, "sh_pp": 0.13718377490789013}], "tot": {"y23": 41286954730.0, "y24": 48385973532.0, "y25": 56376735562.0, "y26": 55543746743.0, "crec_val": 14256792013.0, "crec_pct": 34.53098468083601}};
+
+    function renderLineTrendSVG(containerId, years, series) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      const W = 580, H = 310, padL = 62, padR = 26, padT = 36, padB = 46;
+      const plotW = W - padL - padR, plotH = H - padT - padB;
+      const allVals = series.flatMap(s => [s.y23, s.y24, s.y25, s.y26]) / 1;
+      const maxV = Math.max(...series.flatMap(s => [s.y23, s.y24, s.y25, s.y26])) * 1.12;
+      const palette = {
+        "COBRADOR": "#2563eb",
+        "OFICINA": "#7c3aed",
+        "MEDIO": "#10b981",
+        "PUNTO RECAUDO": "#f59e0b"
+      };
+      const xPos = (i) => padL + (i / (years.length - 1)) * plotW;
+      const yPos = (v) => padT + (1 - v / maxV) * plotH;
+
+      const grid = [0, 0.25, 0.5, 0.75, 1].map(f => {
+        const valM = (maxV * (1 - f)) / 1e6;
+        const y = padT + f * plotH;
+        const lbl = valM >= 1000 ? "$" + (valM / 1000).toFixed(1).replace(".", ",") + "MM" : "$" + Math.round(valM) + "M";
+        return `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#e2e8f0" stroke-dasharray="3,3" />
+                <text x="${padL - 6}" y="${y + 3}" text-anchor="end" font-size="9" fill="#64748b" font-family="monospace">${lbl}</text>`;
+      }).join("");
+
+      const xLabels = years.map((yr, i) => `
+        <line x1="${xPos(i)}" y1="${padT}" x2="${xPos(i)}" y2="${H - padB}" stroke="#f1f5f9" />
+        <text x="${xPos(i)}" y="${H - padB + 16}" text-anchor="middle" font-size="10.5" font-weight="700" fill="#1e293b">${yr}</text>
+      `).join("");
+
+      const linesSvg = series.map(s => {
+        const col = palette[s.name] || "#0f172a";
+        const vals = [s.y23, s.y24, s.y25, s.y26];
+        const pts = vals.map((v, i) => `${xPos(i)},${yPos(v)}`).join(" ");
+        const dots = vals.map((v, i) => {
+          const cx = xPos(i), cy = yPos(v);
+          const vMM = (v / 1e9).toFixed(2).replace(".", ",") + "MM";
+          const tip = `<b>${s.name} (${years[i]})</b><br/>Recaudo: ${fmtCurr(Math.round(v))}<br/>Crec. 23→26*: +${fmtPct(s.crec_pct)}`;
+          return `<circle cx="${cx}" cy="${cy}" r="4.5" fill="${col}" stroke="#ffffff" stroke-width="1.5" class="cursor-pointer" onmouseenter="showBarTip(evt, '${tip.replace(/"/g, '&quot;')}')" onmouseleave="hideBarTip()" />
+                  <text x="${cx}" y="${cy - 8}" text-anchor="middle" font-size="8.5" font-weight="700" fill="${col}">${vMM}</text>`;
+        }).join("");
+        return `<polyline fill="none" stroke="${col}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" points="${pts}" />${dots}`;
+      }).join("");
+
+      const legend = series.map(s => {
+        const col = palette[s.name] || "#0f172a";
+        return `<span class="inline-flex items-center gap-1 text-[10.5px] font-bold text-slate-700"><span class="w-2.5 h-2.5 rounded-full inline-block" style="background:${col}"></span>${s.name} (+${fmtPct(s.crec_pct)})</span>`;
+      }).join(" ");
+
+      el.innerHTML = `
+        <div class="bg-white border border-slate-300 rounded-lg p-3">
+          <div class="flex flex-col gap-1 mb-1">
+            <div class="text-xs font-bold text-slate-800">1. Líneas de Tendencia Anual por Medio de Pago (2023 → 2026*)</div>
+            <div class="flex flex-wrap gap-3">${legend}</div>
+          </div>
+          <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto select-none">
+            ${grid}
+            ${xLabels}
+            <line x1="${padL}" y1="${H - padB}" x2="${W - padR}" y2="${H - padB}" stroke="#475569" stroke-width="1.2" />
+            ${linesSvg}
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderTendenciaMedios(overrideSort) {
+      const d = TENDENCIA_4F_DATA;
+      const t = d.tot;
+      const g23_24 = (t.y24 - t.y23) / t.y23 * 100;
+      const g24_25 = (t.y25 - t.y24) / t.y24 * 100;
+
+      document.getElementById("kpis-tendencia-4f").innerHTML = `
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5">
+          <div class="text-[11px] text-slate-600 font-medium">Total Masivos 2023 → 2025</div>
+          <div class="text-sm md:text-base font-bold font-mono text-slate-800 mt-0.5">${fmtCurr(Math.round(t.y23))} → ${fmtCurr(Math.round(t.y25))}</div>
+          <div class="text-[10.5px] text-slate-500">+${fmtPct(g23_24)} (23→24) | +${fmtPct(g24_25)} (24→25)</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-blue-600">
+          <div class="text-[11px] text-slate-600 font-medium">Acumulado 2026* (Ene–Oct)</div>
+          <div class="text-sm md:text-base font-bold font-mono text-blue-700 mt-0.5">${fmtCurr(Math.round(t.y26))}</div>
+          <div class="text-[10.5px] text-slate-500">+${fmtCurr(Math.round(t.crec_val))} (+${fmtPct(t.crec_pct)}) vs 2023</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-emerald-600">
+          <div class="text-[11px] text-slate-600 font-medium">Líder en Crecimiento: MEDIO</div>
+          <div class="text-sm md:text-base font-bold font-mono text-emerald-700 mt-0.5">+${fmtCurr(6059803073)} (+67,7%)</div>
+          <div class="text-[10.5px] text-slate-500">Ganó +5,3 pp de participación (21,7% → 27,0%)</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-amber-500">
+          <div class="text-[11px] text-slate-600 font-medium">Mayor Volumen: COBRADOR y OFICINA</div>
+          <div class="text-sm md:text-base font-bold font-mono text-amber-700 mt-0.5">OFICINA +37,9% | COBRADOR +18,1%</div>
+          <div class="text-[10.5px] text-slate-500">PUNTO RECAUDO creció +50,2%</div>
+        </div>
+      `;
+
+      const sortMode = overrideSort || document.getElementById("t4f-sort").dataset.customSort || document.getElementById("t4f-sort").value;
+      const rows = sortObjects(d.series, sortMode);
+
+      renderLineTrendSVG("chart-4f-line-wrap", d.years, d.series);
+
+      const barItems = rows.map(r => {
+        const cM = r.crec_val / 1e6;
+        const col = r.name === "MEDIO" ? "#10b981" : (r.name === "OFICINA" ? "#7c3aed" : (r.name === "COBRADOR" ? "#2563eb" : "#f59e0b"));
+        return {
+          label: r.name,
+          val: cM,
+          color: col,
+          txtColor: "#0f172a",
+          topLabel: "+$" + Math.round(cM).toLocaleString("es-CO") + "M",
+          subTop: "+" + r.crec_pct.toFixed(1).replace(".", ",") + "%",
+          subColor: "#047857",
+          tip: `<b>${r.name}</b><br/>2023: ${fmtCurr(Math.round(r.y23))}<br/>2026*: ${fmtCurr(Math.round(r.y26))}<br/>Crecimiento: +${fmtCurr(Math.round(r.crec_val))} (+${fmtPct(r.crec_pct)})`
+        };
+      });
+      renderVerticalBarChartSVG(
+        "chart-4f-bar-wrap",
+        "2. Crecimiento por Medio de Pago (2023 vs 2026* — $M y %)",
+        "Columnas verticales sincronizadas con el ordenamiento seleccionado",
+        barItems
+      );
+
+      const bodyHtml = rows.map(r => `
+        <tr>
+          <td class="font-sans font-bold grp-sep">${r.name}</td>
+          <td class="text-right">${fmtCurr(Math.round(r.y23))}</td>
+          <td class="text-right">${fmtCurr(Math.round(r.y24))}</td>
+          <td class="text-right">${fmtCurr(Math.round(r.y25))}</td>
+          <td class="text-right font-bold text-blue-700 grp-sep">${fmtCurr(Math.round(r.y26))}</td>
+          <td class="text-center">+${fmtPct(r.g23_24)}</td>
+          <td class="text-center">+${fmtPct(r.g24_25)}</td>
+          <td class="text-right font-bold text-emerald-700">+${fmtCurr(Math.round(r.crec_val))}</td>
+          <td class="text-center font-bold grp-sep"><span class="px-1.5 py-0.5 rounded text-[10.5px] bg-emerald-500/15 text-emerald-700">+${fmtPct(r.crec_pct)}</span></td>
+          <td class="text-center">${fmtPct(r.sh23)}</td>
+          <td class="text-center font-bold">${fmtPct(r.sh26)}</td>
+          <td class="text-center font-bold ${r.sh_pp >= 0 ? 'text-emerald-700' : 'text-red-700'}">${(r.sh_pp >= 0 ? '+' : '') + r.sh_pp.toFixed(1).replace('.', ',')} pp</td>
+        </tr>
+      `).join("");
+
+      const totHtml = `
+        <tr class="total-row">
+          <td class="font-sans grp-sep">TOTAL MASIVOS</td>
+          <td class="text-right">${fmtCurr(Math.round(t.y23))}</td>
+          <td class="text-right">${fmtCurr(Math.round(t.y24))}</td>
+          <td class="text-right">${fmtCurr(Math.round(t.y25))}</td>
+          <td class="text-right grp-sep">${fmtCurr(Math.round(t.y26))}</td>
+          <td class="text-center">+${fmtPct(g23_24)}</td>
+          <td class="text-center">+${fmtPct(g24_25)}</td>
+          <td class="text-right">+${fmtCurr(Math.round(t.crec_val))}</td>
+          <td class="text-center grp-sep">+${fmtPct(t.crec_pct)}</td>
+          <td class="text-center">100,0%</td>
+          <td class="text-center">100,0%</td>
+          <td class="text-center">0,0 pp</td>
+        </tr>
+      `;
+      document.getElementById("tbody-tendencia-4f").innerHTML = bodyHtml + totHtml;
     }
 
     // Inicializar vistas
