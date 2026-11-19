@@ -138,14 +138,14 @@
             <button onclick="switchSubTab1('sub1_asesores')" id="btn-sub1_asesores" class="sub1-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-blue-600 text-white">
               1A. Ranking por Asesor Comercial (2.332 Asesores)
             </button>
-            <button onclick="switchSubTab1('sub1_antiguedad')" id="btn-sub1_antiguedad" class="sub1-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
+            <button onclick="switchSubTab1('sub1_antiguedad')" id="btn-sub1_antiguedad" style="display:none" class="sub1-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
               1B. Sostenibilidad por Cuotas y Posventa (Col AJ / Z)
             </button>
             <button onclick="switchSubTab1('sub1_tipovend')" id="btn-sub1_tipovend" class="sub1-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
-              1C. Por Tipo de Vendedor (Col AE / W) y Estatus
+              1C. Por Tipo de Vendedor y Estatus
             </button>
             <button onclick="switchSubTab1('sub1_meses')" id="btn-sub1_meses" class="sub1-btn px-2.5 py-1.5 rounded-md text-xs font-bold bg-slate-100 text-slate-700 border border-slate-300">
-              1D. Efectividad Mensual por Inicio de Vigencia (Col D)
+              1D. Efectividad Mensual por Inicio de Vigencia
             </button>
           </div>
           <span class="text-[11px] text-blue-700 font-semibold">💡 Haga clic en cualquier columna (⇅) o use el filtro "Ordenar" para ordenar de Mayor a Menor</span>
@@ -157,7 +157,7 @@
           <div class="bg-slate-50 border border-slate-300 rounded-xl p-2.5 space-y-1.5">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <div class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                <span>🏷️ Efectividad por Tipo de Vendedor (Col AE / W):</span>
+                <span>🏷️ Efectividad por Tipo de Vendedor:</span>
                 <span class="text-[11px] font-normal text-slate-600">Clic en cualquier tarjeta para filtrar ese canal</span>
               </div>
               <span id="asesores-count-badge" class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-blue-600/15 text-blue-700"></span>
@@ -291,8 +291,8 @@
                   <th onclick="toggleSelectSort('sort-antiguedad','ef_desc','ef_asc',renderStaticSubTabs1)" class="text-center grp-sep">% Efectividad ⇅</th>
                   <th onclick="toggleSelectSort('sort-antiguedad','ret_desc','ret_asc',renderStaticSubTabs1)" class="text-center">% s/ Retiros ⇅</th>
                   <th class="text-center grp-sep">% Acum. Retiros</th>
-                  <th onclick="toggleSelectSort('sort-antiguedad','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente (Col P) ⇅</th>
-                  <th onclick="toggleSelectSort('sort-antiguedad','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido (Col F) ⇅</th>
+                  <th onclick="toggleSelectSort('sort-antiguedad','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente ⇅</th>
+                  <th onclick="toggleSelectSort('sort-antiguedad','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido ⇅</th>
                   <th class="text-left">Interpretación Operativa</th>
                 </tr>
               </thead>
@@ -306,7 +306,7 @@
           <div class="space-y-2">
             <div class="flex flex-wrap items-center justify-between gap-2">
               <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
-                A. Efectividad y Posventa por Tipo de Vendedor (Col AE en Vigentes vs. Col W en Retiros)
+                A. Efectividad y Posventa por Tipo de Vendedor
               </h3>
               <select id="sort-tv-tbl" onchange="renderStaticSubTabs1()" class="px-2.5 py-1 text-xs font-bold rounded-md bg-blue-50/50 border-2 border-blue-600">
                 <option value="tot_desc" selected>⬇️ Total Ventas: Mayor a Menor</option>
@@ -336,8 +336,8 @@
                     <th onclick="toggleSelectSort('sort-tv-tbl','vig_desc','vig_asc',renderStaticSubTabs1)" class="text-right">Vigentes ⇅</th>
                     <th onclick="toggleSelectSort('sort-tv-tbl','ret_desc','ret_asc',renderStaticSubTabs1)" class="text-right">Retiros ⇅</th>
                     <th onclick="toggleSelectSort('sort-tv-tbl','ef_desc','ef_asc',renderStaticSubTabs1)" class="text-center grp-sep">% Efectividad ⇅</th>
-                    <th onclick="toggleSelectSort('sort-tv-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente (Col P) ⇅</th>
-                    <th onclick="toggleSelectSort('sort-tv-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido (Col F) ⇅</th>
+                    <th onclick="toggleSelectSort('sort-tv-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente ⇅</th>
+                    <th onclick="toggleSelectSort('sort-tv-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido ⇅</th>
                     <th onclick="toggleSelectSort('sort-tv-tbl','rpos_desc','rpos_asc',renderStaticSubTabs1)" class="text-right">Retiros POSVENTA ⇅</th>
                     <th onclick="toggleSelectSort('sort-tv-tbl','ppos_desc','ppos_asc',renderStaticSubTabs1)" class="text-center">% Posv s/ Canal ⇅</th>
                     <th onclick="toggleSelectSort('sort-tv-tbl','vpos_desc','vpos_asc',renderStaticSubTabs1)" class="text-right">$ Perdido POSVENTA ⇅</th>
@@ -381,8 +381,8 @@
                     <th onclick="toggleSelectSort('sort-est-tbl','vig_desc','vig_asc',renderStaticSubTabs1)" class="text-right">Vigentes ⇅</th>
                     <th onclick="toggleSelectSort('sort-est-tbl','ret_desc','ret_asc',renderStaticSubTabs1)" class="text-right">Retiros ⇅</th>
                     <th onclick="toggleSelectSort('sort-est-tbl','ef_desc','ef_asc',renderStaticSubTabs1)" class="text-center grp-sep">% Efectividad ⇅</th>
-                    <th onclick="toggleSelectSort('sort-est-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente (Col P) ⇅</th>
-                    <th onclick="toggleSelectSort('sort-est-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido (Col F) ⇅</th>
+                    <th onclick="toggleSelectSort('sort-est-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente ⇅</th>
+                    <th onclick="toggleSelectSort('sort-est-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido ⇅</th>
                     <th onclick="toggleSelectSort('sort-est-tbl','rpos_desc','rpos_asc',renderStaticSubTabs1)" class="text-right">Retiros POSVENTA ⇅</th>
                     <th class="text-right">$ Perdido POSVENTA</th>
                     <th class="text-right">Retiros 1 a 3 Cuotas</th>
@@ -421,14 +421,14 @@
                   <th class="bg-amber-100 text-amber-900">4. POSVENTA</th>
                 </tr>
                 <tr class="col-hdr">
-                  <th onclick="toggleSelectSort('sort-meses-tbl','za','az',renderStaticSubTabs1)" class="text-center grp-sep">Mes Inicio Vigencia (Col D) ⇅</th>
+                  <th onclick="toggleSelectSort('sort-meses-tbl','za','az',renderStaticSubTabs1)" class="text-center grp-sep">Mes Inicio Vigencia ⇅</th>
                   <th onclick="toggleSelectSort('sort-meses-tbl','tot_desc','tot_asc',renderStaticSubTabs1)" class="text-right">Total Ventas ⇅</th>
-                  <th onclick="toggleSelectSort('sort-meses-tbl','vig_desc','vig_asc',renderStaticSubTabs1)" class="text-right">Vigentes (Col D) ⇅</th>
-                  <th onclick="toggleSelectSort('sort-meses-tbl','ret_desc','ret_asc',renderStaticSubTabs1)" class="text-right">Retiros (Col D) ⇅</th>
+                  <th onclick="toggleSelectSort('sort-meses-tbl','vig_desc','vig_asc',renderStaticSubTabs1)" class="text-right">Vigentes ⇅</th>
+                  <th onclick="toggleSelectSort('sort-meses-tbl','ret_desc','ret_asc',renderStaticSubTabs1)" class="text-right">Retiros ⇅</th>
                   <th onclick="toggleSelectSort('sort-meses-tbl','ef_desc','ef_asc',renderStaticSubTabs1)" class="text-center">% Efectividad ⇅</th>
                   <th class="text-center grp-sep">% Retiro</th>
-                  <th onclick="toggleSelectSort('sort-meses-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente (Col P) ⇅</th>
-                  <th onclick="toggleSelectSort('sort-meses-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido (Col F) ⇅</th>
+                  <th onclick="toggleSelectSort('sort-meses-tbl','vv_desc','vv_asc',renderStaticSubTabs1)" class="text-right">Ingreso Vigente ⇅</th>
+                  <th onclick="toggleSelectSort('sort-meses-tbl','rv_desc','rv_asc',renderStaticSubTabs1)" class="text-right grp-sep">Ingreso Perdido ⇅</th>
                   <th onclick="toggleSelectSort('sort-meses-tbl','rpos_desc','rpos_asc',renderStaticSubTabs1)" class="text-right">Retiros POSVENTA ⇅</th>
                 </tr>
               </thead>
@@ -643,7 +643,7 @@
               <tr class="col-hdr">
                 <th onclick="toggleSelectSort('tp-sort','az','za',renderTP)" class="text-left">Empresa Tarjeta Profesional (Col AB) ⇅</th>
                 <th onclick="toggleSelectSort('tp-sort','cnt_desc','cnt_asc',renderTP)" class="text-right">Planes ⇅</th>
-                <th onclick="toggleSelectSort('tp-sort','val_desc','val_asc',renderTP)" class="text-right grp-sep">Total Valor (Col P) ⇅</th>
+                <th onclick="toggleSelectSort('tp-sort','val_desc','val_asc',renderTP)" class="text-right grp-sep">Total Valor ⇅</th>
                 <th onclick="toggleSelectSort('tp-sort','adel29_desc','adel29_asc',renderTP)" class="text-right bg-emerald-50">Adel. &gt;29d ⇅</th>
                 <th onclick="toggleSelectSort('tp-sort','pown_desc','pown_asc',renderTP)" class="text-center bg-emerald-50">% s/ Emp. ⇅</th>
                 <th onclick="toggleSelectSort('tp-sort','adel29_desc','adel29_asc',renderTP)" class="text-center bg-emerald-100/70 font-extrabold">% Part. Total &gt;29d ⇅</th>
