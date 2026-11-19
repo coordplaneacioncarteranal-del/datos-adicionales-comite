@@ -97,6 +97,9 @@
         <button onclick="switchTab('tab4')" id="btn-tab4" class="tab-btn px-2.5 py-1.5 rounded-md text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
           4. CRECIMIENTO MEDIOS, ZONAS Y EMPRESARIAL
         </button>
+        <button onclick="switchTab('tab5')" id="btn-tab5" class="tab-btn px-2.5 py-1.5 rounded-md text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+          5. ANÁLISIS TÍTULOS 2026
+        </button>
       </div>
     </div>
 
@@ -1009,6 +1012,83 @@
       </div>
     </div>
 
+
+    <!-- =====================================================================
+         PESTAÑA 5: ANÁLISIS TÍTULOS 2026 (HOJA RESUMEN)
+    ====================================================================== -->
+    <div id="panel-tab5" class="tab-panel hidden space-y-3">
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-xl p-3.5 space-y-3">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-2 pb-2.5 border-b border-[var(--border)]">
+          <div>
+            <h2 class="text-sm md:text-base font-bold">5. Análisis de Títulos 2026 — Cartera por Estado y Recaudo Mensual (Enero–Noviembre)</h2>
+            <p class="text-[11px] text-[var(--muted-foreground)]">Fuente: Analisis titulos 18-11-2026.ods (Hoja Resumen)</p>
+          </div>
+          <div class="flex flex-wrap gap-2 items-center">
+            <select id="t5-est-sort" onchange="renderTitulos()" class="px-2.5 py-1.5 text-xs font-bold rounded-md bg-blue-50/50 border-2 border-blue-600">
+              <option value="val_desc" selected>⬇️ Cartera Estado ($): Mayor a Menor</option>
+              <option value="val_asc">⬆️ Cartera Estado ($): Menor a Mayor</option>
+              <option value="cnt_desc">⬇️ Contratos (#): Mayor a Menor</option>
+              <option value="cnt_asc">⬆️ Contratos (#): Menor a Mayor</option>
+              <option value="az">🔤 Estado: A → Z</option>
+            </select>
+            <select id="t5-mes-sort" onchange="renderTitulos()" class="px-2.5 py-1.5 text-xs font-bold rounded-md bg-white border border-slate-300">
+              <option value="ord_asc" selected>📅 Meses: Enero → Noviembre</option>
+              <option value="ord_desc">📅 Meses: Noviembre → Enero</option>
+              <option value="total_desc">⬇️ Recaudo Mes ($): Mayor a Menor</option>
+              <option value="total_asc">⬆️ Recaudo Mes ($): Menor a Mayor</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="kpis-tab5" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5"></div>
+
+        <div id="chart-tab5-wrap"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
+          <div class="lg:col-span-5 overflow-x-auto border border-slate-300 rounded-lg">
+            <table class="tbl-compact">
+              <thead>
+                <tr class="grp-hdr">
+                  <th class="bg-slate-200 text-slate-800 grp-sep">1. ESTADO TÍTULOS</th>
+                  <th colspan="5" class="bg-blue-100 text-blue-900">2. CARTERA PAGADA Y CONTRATOS</th>
+                </tr>
+                <tr class="col-hdr">
+                  <th onclick="toggleSelectSort('t5-est-sort','az','za',renderTitulos)" class="text-left grp-sep">Estado ⇅</th>
+                  <th onclick="toggleSelectSort('t5-est-sort','val_desc','val_asc',renderTitulos)" class="text-right">Valor Pagado ($) ⇅</th>
+                  <th class="text-center">% Valor</th>
+                  <th onclick="toggleSelectSort('t5-est-sort','cnt_desc','cnt_asc',renderTitulos)" class="text-right">Contratos ⇅</th>
+                  <th class="text-center">% Cant.</th>
+                  <th class="text-right">Prom./Contr. ($)</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-t5-est" class="font-mono tabular-nums"></tbody>
+            </table>
+          </div>
+
+          <div class="lg:col-span-7 overflow-x-auto border border-slate-300 rounded-lg">
+            <table class="tbl-compact">
+              <thead>
+                <tr class="grp-hdr">
+                  <th class="bg-slate-200 text-slate-800 grp-sep">1. MES 2026</th>
+                  <th colspan="4" class="bg-emerald-100 text-emerald-900 grp-sep">2. RECAUDO POR ESTADO ($)</th>
+                  <th class="bg-amber-100 text-amber-900">3. TOTAL</th>
+                </tr>
+                <tr class="col-hdr">
+                  <th onclick="toggleSelectSort('t5-mes-sort','ord_asc','ord_desc',renderTitulos)" class="text-left grp-sep">Fecha ⇅</th>
+                  <th class="text-right">ACTIVA</th>
+                  <th class="text-right">ATENDIDO</th>
+                  <th class="text-right">CANCELADA</th>
+                  <th class="text-right grp-sep">DESISTIO</th>
+                  <th onclick="toggleSelectSort('t5-mes-sort','total_desc','total_asc',renderTitulos)" class="text-right">Total Mes ($) ⇅</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-t5-mes" class="font-mono tabular-nums"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -1869,6 +1949,7 @@
         if (bar4) bar4.classList.add("hidden");
         if (note4) note4.classList.add("hidden");
         renderTendenciaMedios();
+    renderTitulos();
       } else {
         if (cWrap) cWrap.classList.add("hidden");
         if (tWrap) tWrap.classList.add("hidden");
@@ -2800,6 +2881,102 @@
         </tr>
       `;
       document.getElementById("tbody-tendencia-4f").innerHTML = bodyHtml + totHtml;
+    }
+
+
+    const TITULOS_DATA = {"estados":[{"name":"ACTIVA","val":146099515.7031,"cnt":140,"prom":1043567.9693078571,"pct_val":23.638737400585278,"pct_cnt":37.333333333333336},{"name":"ATENDIDO","val":166111951.0,"cnt":50,"prom":3322239.02,"pct_val":26.876726934315027,"pct_cnt":13.333333333333334},{"name":"CANCELADA","val":264221966.01079,"cnt":96,"prom":2752312.145945729,"pct_val":42.750817071071964,"pct_cnt":25.6},{"name":"DESISTIO","val":41617833.0,"cnt":89,"prom":467616.1011235955,"pct_val":6.7337185940277395,"pct_cnt":23.733333333333334}],"tot_est":{"val":618051265.71389,"cnt":375,"prom":1648136.7085703732},"meses":[{"name":"2026 enero","ord":1,"activa":5763291.0,"atendido":4806972.0,"cancelada":5053788.0,"desistio":171667.0,"total":15795718.0},{"name":"2026 febrero","ord":2,"activa":4662940.0,"atendido":2685300.0,"cancelada":10875616.0,"desistio":167000.0,"total":18390856.0},{"name":"2026 marzo","ord":3,"activa":7820568.0,"atendido":4096000.0,"cancelada":7651888.0,"desistio":338667.0,"total":19907123.0},{"name":"2026 abril","ord":4,"activa":7347757.0,"atendido":0.0,"cancelada":2188740.0,"desistio":167000.0,"total":9703497.0},{"name":"2026 mayo","ord":5,"activa":7368004.0,"atendido":3034000.0,"cancelada":2008700.0,"desistio":167000.0,"total":12577704.0},{"name":"2026 junio","ord":6,"activa":8809451.0,"atendido":7582900.0,"cancelada":1862300.0,"desistio":0.0,"total":18254651.0},{"name":"2026 julio","ord":7,"activa":13289569.0,"atendido":0.0,"cancelada":3200000.0,"desistio":109200.0,"total":16598769.0},{"name":"2026 agosto","ord":8,"activa":10040901.0,"atendido":2851000.0,"cancelada":6776500.0,"desistio":0.0,"total":19668401.0},{"name":"2026 septiembre","ord":9,"activa":8959885.0,"atendido":0.0,"cancelada":4421000.0,"desistio":0.0,"total":13380885.0},{"name":"2026 octubre","ord":10,"activa":11386390.0,"atendido":0.0,"cancelada":4781900.0,"desistio":0.0,"total":16168290.0},{"name":"2026 noviembre","ord":11,"activa":6265145.0,"atendido":0.0,"cancelada":0.0,"desistio":0.0,"total":6265145.0}],"tot_mes":{"activa":91713901.0,"atendido":25056172.0,"cancelada":48820432.0,"desistio":1120534.0,"total":166711039.0}};
+
+    function renderTitulos() {
+      const d = TITULOS_DATA;
+      const te = d.tot_est;
+      const tm = d.tot_mes;
+
+      document.getElementById("kpis-tab5").innerHTML = `
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-blue-600">
+          <div class="text-[11px] text-slate-600 font-medium">Cartera Total Títulos (Valor Pagado)</div>
+          <div class="text-sm md:text-base font-bold font-mono text-blue-700 mt-0.5">${fmtCurr(Math.round(te.val))}</div>
+          <div class="text-[10.5px] text-slate-500">${fmtInt(te.cnt)} contratos | Prom: ${fmtCurr(Math.round(te.prom))}</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-emerald-600">
+          <div class="text-[11px] text-slate-600 font-medium">Recaudo Títulos 2026 (Ene–Nov)</div>
+          <div class="text-sm md:text-base font-bold font-mono text-emerald-700 mt-0.5">${fmtCurr(Math.round(tm.total))}</div>
+          <div class="text-[10.5px] text-slate-500">ACTIVA: ${fmtCurr(Math.round(tm.activa))} (${fmtPct(tm.activa/tm.total*100)})</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-amber-500">
+          <div class="text-[11px] text-slate-600 font-medium">Mayor Cartera: CANCELADA / ATENDIDO</div>
+          <div class="text-sm md:text-base font-bold font-mono text-amber-700 mt-0.5">$ 264,2M / $ 166,1M</div>
+          <div class="text-[10.5px] text-slate-500">CANCELADA: 96 contr. | ATENDIDO: 50 contr.</div>
+        </div>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-emerald-500">
+          <div class="text-[11px] text-slate-600 font-medium">Estado con Más Contratos: ACTIVA</div>
+          <div class="text-sm md:text-base font-bold font-mono text-emerald-700 mt-0.5">140 contratos (37,3%)</div>
+          <div class="text-[10.5px] text-slate-500">Valor pagado: ${fmtCurr(146099516)}</div>
+        </div>
+      `;
+
+      const estSort = document.getElementById("t5-est-sort").dataset.customSort || document.getElementById("t5-est-sort").value;
+      const estRows = sortObjects(d.estados, estSort);
+      document.getElementById("tbody-t5-est").innerHTML = estRows.map(e => `
+        <tr>
+          <td class="font-sans font-bold grp-sep">${e.name}</td>
+          <td class="text-right font-semibold">${fmtCurr(Math.round(e.val))}</td>
+          <td class="text-center">${fmtPct(e.pct_val)}</td>
+          <td class="text-right">${fmtInt(e.cnt)}</td>
+          <td class="text-center">${fmtPct(e.pct_cnt)}</td>
+          <td class="text-right">${fmtCurr(Math.round(e.prom))}</td>
+        </tr>
+      `).join("") + `
+        <tr class="total-row">
+          <td class="font-sans grp-sep">TOTAL RESULTADO</td>
+          <td class="text-right">${fmtCurr(Math.round(te.val))}</td>
+          <td class="text-center">100,0%</td>
+          <td class="text-right">${fmtInt(te.cnt)}</td>
+          <td class="text-center">100,0%</td>
+          <td class="text-right">${fmtCurr(Math.round(te.prom))}</td>
+        </tr>
+      `;
+
+      const mesSort = document.getElementById("t5-mes-sort").dataset.customSort || document.getElementById("t5-mes-sort").value;
+      const mesRows = sortObjects(d.meses, mesSort);
+      document.getElementById("tbody-t5-mes").innerHTML = mesRows.map(m => `
+        <tr>
+          <td class="font-sans font-bold grp-sep">${m.name}</td>
+          <td class="text-right text-emerald-700">${fmtCurr(Math.round(m.activa))}</td>
+          <td class="text-right">${fmtCurr(Math.round(m.atendido))}</td>
+          <td class="text-right">${fmtCurr(Math.round(m.cancelada))}</td>
+          <td class="text-right text-slate-500 grp-sep">${fmtCurr(Math.round(m.desistio))}</td>
+          <td class="text-right font-bold text-blue-700">${fmtCurr(Math.round(m.total))}</td>
+        </tr>
+      `).join("") + `
+        <tr class="total-row">
+          <td class="font-sans grp-sep">TOTAL 2026 (ENE–NOV)</td>
+          <td class="text-right">${fmtCurr(Math.round(tm.activa))}</td>
+          <td class="text-right">${fmtCurr(Math.round(tm.atendido))}</td>
+          <td class="text-right">${fmtCurr(Math.round(tm.cancelada))}</td>
+          <td class="text-right grp-sep">${fmtCurr(Math.round(tm.desistio))}</td>
+          <td class="text-right">${fmtCurr(Math.round(tm.total))}</td>
+        </tr>
+      `;
+
+      const chartItems = mesRows.map(m => {
+        const totM = m.total / 1e6;
+        return {
+          label: m.name.replace("2026 ", "").toUpperCase(),
+          val: totM,
+          color: m.total >= 18000000 ? "#10b981" : (m.total >= 12000000 ? "#2563eb" : "#f59e0b"),
+          txtColor: "#0f172a",
+          topLabel: "$" + totM.toFixed(1).replace(".", ",") + "M",
+          subTop: fmtPct(m.activa / (m.total || 1) * 100) + " Act.",
+          subColor: "#047857",
+          tip: `<b>${m.name}</b><br/>Total: ${fmtCurr(Math.round(m.total))}<br/>ACTIVA: ${fmtCurr(Math.round(m.activa))}<br/>ATENDIDO: ${fmtCurr(Math.round(m.atendido))}<br/>CANCELADA: ${fmtCurr(Math.round(m.cancelada))}<br/>DESISTIO: ${fmtCurr(Math.round(m.desistio))}`
+        };
+      });
+      renderVerticalBarChartSVG(
+        "chart-tab5-wrap",
+        "Recaudo Mensual de Títulos 2026 ($ Millones COP)",
+        "Sincronizado con el ordenamiento mensual seleccionado | Etiqueta superior muestra % participación de ACTIVA",
+        chartItems
+      );
     }
 
     // Inicializar vistas
