@@ -995,7 +995,7 @@
             </table>
           </div>
           <div class="text-[11px] text-[var(--muted-foreground)] bg-slate-50 border border-slate-200 rounded-md px-3 py-2">
-            <strong>Nota:</strong> * 2026 corresponde a información acumulada hasta octubre; los demás años se mantienen con sus valores originales. Destaca que <strong>MEDIOS ELECTRONICOS (+67,7%)</strong> y <strong>PUNTO RECAUDO (+50,2%)</strong> ya superaron en 10 meses de 2026 todo el recaudo del año 2025.
+            <strong>Nota:</strong> * 2026 corresponde a información acumulada hasta octubre; los demás años se mantienen con sus valores originales. Destaca que <strong>MEDIOS ELECTRONICOS (+25,1%)</strong> y <strong>PUNTO RECAUDO (+50,2%)</strong> ya superaron en 10 meses de 2026 todo el recaudo del año 2025.
           </div>
         </div>
 
@@ -2611,7 +2611,7 @@
     }
 
 
-    const TENDENCIA_4F_DATA = {"years": ["2023", "2024", "2025", "2026*"], "series": [{"name": "COBRADOR", "y23": 20851756864.0, "y24": 23014806974.0, "y25": 25675619214.0, "y26": 24633223998.0, "crec_val": 3781467134.0, "crec_pct": 18.135004923871, "g23_24": 10.373466965435647, "g24_25": 11.561305914952664, "sh23": 50.504468058644825, "sh26": 44.34923000779462, "sh_pp": -6.155238050850208}, {"name": "OFICINA", "y23": 10994507124.0, "y24": 13083920440.0, "y25": 15249716080.0, "y26": 15166243985.0, "crec_val": 4171736861.0, "crec_pct": 37.9438278946901, "g23_24": 19.00415627944797, "g24_25": 16.55310921471791, "sh23": 26.629493979150638, "sh26": 27.30504309544324, "sh_pp": 0.6755491162926006}, {"name": "MEDIOS ELECTRONICOS", "y23": 8955364482.0, "y24": 11708130428.0, "y25": 14779444107.0, "y26": 15015167555.0, "crec_val": 6059803073.0, "crec_pct": 67.6667385808809, "g23_24": 30.738737117098612, "g24_25": 26.232315209394592, "sh23": 21.690542546827356, "sh26": 27.03304770647708, "sh_pp": 5.3425051596497255}, {"name": "PUNTO RECAUDO", "y23": 485326260.0, "y24": 579115690.0, "y25": 671956161.0, "y26": 729111205.0, "crec_val": 243784945.0, "crec_pct": 50.231146569320195, "g23_24": 19.325026838646643, "g24_25": 16.0314204230937, "sh23": 1.1754954153771757, "sh26": 1.3126791902850659, "sh_pp": 0.13718377490789013}], "tot": {"y23": 41286954730.0, "y24": 48385973532.0, "y25": 56376735562.0, "y26": 55543746743.0, "crec_val": 14256792013.0, "crec_pct": 34.53098468083601}};
+    const TENDENCIA_4F_DATA = {"years":["2023","2024","2025","2026*"],"series":[{"name":"COBRADOR","y23":20851756864.0,"y24":23014806974.0,"y25":25675619214.0,"y26":24633223998.0,"crec_val":3781467134.0,"crec_pct":18.135004923871,"g23_24":10.373466965435647,"g24_25":11.561305914952664,"sh23":47.02843211597617,"sh26":44.34923000779462,"sh_pp":-2.6792021081815562},{"name":"OFICINA","y23":10994507124.0,"y24":13083920440.0,"y25":15249716080.0,"y26":15166243985.0,"crec_val":4171736861.0,"crec_pct":37.9438278946901,"g23_24":19.00415627944797,"g24_25":16.55310921471791,"sh23":24.79668429389425,"sh26":27.30504309544324,"sh_pp":2.50835880154899},{"name":"MEDIOS ELECTRONICOS","y23":12007027745.0,"y24":14858322486.0,"y25":18112552381.0,"y26":15015167555.0,"crec_val":3008139810.0,"crec_pct":25.053159481976362,"g23_24":23.74688225558023,"g24_25":21.901731491332498,"sh23":27.080293181207455,"sh26":27.03304770647708,"sh_pp":-0.047245474730374326},{"name":"PUNTO RECAUDO","y23":485326260.0,"y24":579115690.0,"y25":671956161.0,"y26":729111205.0,"crec_val":243784945.0,"crec_pct":50.231146569320195,"g23_24":19.325026838646643,"g24_25":16.0314204230937,"sh23":1.0945904089221306,"sh26":1.3126791902850659,"sh_pp":0.2180887813629353}],"tot":{"y23":44338617993.0,"y24":51536165590.0,"y25":59709843836.0,"y26":55543746743.0,"crec_val":11205128750.0,"crec_pct":25.27171404343054}};
 
     let filter4fMedio = "ALL";
     function set4fMedio(name) {
@@ -2734,8 +2734,8 @@
         </div>
         <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-emerald-600">
           <div class="text-[11px] text-slate-600 font-medium">Líder en Crecimiento: MEDIOS ELECTRONICOS</div>
-          <div class="text-sm md:text-base font-bold font-mono text-emerald-700 mt-0.5">+${fmtCurr(6059803073)} (+67,7%)</div>
-          <div class="text-[10.5px] text-slate-500">Superó todo 2025 en 10 meses de 2026</div>
+          <div class="text-sm md:text-base font-bold font-mono text-emerald-700 mt-0.5">+${fmtCurr(3008139810)} (+25,1%)</div>
+          <div class="text-[10.5px] text-slate-500">Ajustado con diferencia anual 2023–2025</div>
         </div>
         <div class="bg-slate-50 border border-slate-200 rounded-lg p-2.5 border-l-4 border-l-amber-500">
           <div class="text-[11px] text-slate-600 font-medium">OFICINA, COBRADOR y PUNTO RECAUDO</div>
