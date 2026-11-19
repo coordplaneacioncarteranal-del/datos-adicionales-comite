@@ -1338,6 +1338,7 @@
         btn.className = "tab-btn px-2.5 py-1.5 rounded-md text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
       });
       document.getElementById("btn-" + tabId).className = "tab-btn px-2.5 py-1.5 rounded-md text-xs font-bold transition-all bg-blue-600 text-white shadow-sm";
+      if (tabId === "tab5") renderTitulos();
     }
 
     function switchSubTab1(subId) {
@@ -1949,7 +1950,6 @@
         if (bar4) bar4.classList.add("hidden");
         if (note4) note4.classList.add("hidden");
         renderTendenciaMedios();
-    renderTitulos();
       } else {
         if (cWrap) cWrap.classList.add("hidden");
         if (tWrap) tWrap.classList.add("hidden");
@@ -2987,6 +2987,7 @@
     renderRetirosTP();
     renderDocRegionales();
     renderTab4();
+    renderTitulos();
   </script>
 </body>
 </html>
